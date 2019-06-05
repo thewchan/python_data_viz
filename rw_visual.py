@@ -23,6 +23,10 @@ while True:
         rw.x_values[-1], rw.y_values[-1], c='red', edgecolors='none', s=100,
         )
 
+    # Remove the axes.
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+
     plt.savefig('rw_plot.png', bbox_inches='tight')
     plt.show()
 
