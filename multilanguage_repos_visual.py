@@ -1,16 +1,27 @@
 import requests
+import sys
 
 from plotly.graph_objs import Bar
 from plotly import offline
 
 # Make an API call and store the response.
-language = input("Enter programming language to visualize: ")
-url = (
-    'https://api.github.com/search/repositories?q=language:'
-    f'{language}&sort=stars')
-headers = {'Accept': 'application/vnd.github.v3+json'}
-r = requests.get(url, headers=headers)
-print(f"Status code: {r.status_code}")
+while True:
+    language = (
+        input("Enter programming language to visualize (or 'q' to quit): ")
+        )
+    if language.lower() == 'q':
+        sys.exit()
+    url = (
+        'https://api.github.com/search/repositories?q=language:'
+        f'{language}&sort=stars')
+    headers = {'Accept': 'application/vnd.github.v3+json'}
+    r = requests.get(url, headers=headers)
+    print(f"Status code: {r.status_code}")
+    if r.status_code == 200:
+        break
+    else:
+        print("The language you entered does not exist on GitHub.")
+        continue
 
 # Process results.
 response_dict = r.json()
